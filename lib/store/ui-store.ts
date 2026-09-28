@@ -72,7 +72,7 @@ interface UIState {
 }
 
 export const useUIStore = create<UIState>((set, get) => ({
-  productMode: "campaign",
+  productMode: "discover",
   setProductMode: (productMode) => set({ productMode }),
   discoverSections: { creators: "ai-search", brandRadar: "explore", creative: "calendar" },
   setDiscoverSection: (area, section) =>

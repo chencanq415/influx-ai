@@ -82,13 +82,20 @@ export function BusinessSidebar() {
   const collapsed = useUIStore((s) => s.sidebarCollapsed);
   const toggleSidebar = useUIStore((s) => s.toggleSidebar);
   const expanded = !collapsed;
+  const isPublicDemo = process.env.NEXT_PUBLIC_GITHUB_PAGES === "true";
 
   useEffect(() => {
+    if (isPublicDemo) {
+      setProductMode("discover");
+      setDiscoverSection("creators", "ai-search");
+      window.localStorage.setItem("influx-ai-product-mode", "discover");
+      return;
+    }
     const savedMode = window.localStorage.getItem("influx-ai-product-mode");
     if (savedMode === "discover" || savedMode === "campaign") {
       setProductMode(savedMode);
     }
-  }, [setProductMode]);
+  }, [isPublicDemo, setDiscoverSection, setProductMode]);
 
   const changeProductMode = (mode: "discover" | "campaign") => {
     if (mode === productMode) return;
@@ -160,7 +167,7 @@ export function BusinessSidebar() {
                   key={mode}
                   onSelect={() => changeProductMode(mode)}
                   className={cn(
-                    "items-start px-2.5 py-2.5",
+                    "h-auto min-h-[60px] items-start px-2.5 py-2.5",
                     mode === "campaign" &&
                       "hover:bg-[#F2F3F5] data-[highlighted]:bg-[#F2F3F5]",
                   )}

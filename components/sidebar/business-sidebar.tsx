@@ -140,7 +140,7 @@ export function BusinessSidebar() {
               {expanded && (
                 <>
                   <span className="min-w-0 flex-1 truncate text-[16px] font-semibold tracking-[-0.03em] text-navy">
-                    Infux AI
+                    Influx AI
                   </span>
                   <ChevronDown className="h-3.5 w-3.5 flex-shrink-0 text-muted" />
                 </>
@@ -150,7 +150,8 @@ export function BusinessSidebar() {
           <DropdownMenuContent
             side={expanded ? "bottom" : "right"}
             align="start"
-            className="w-[244px] p-1.5"
+            sideOffset={8}
+            className="w-[260px] origin-top-left rounded-[12px] border border-border/80 bg-white p-1.5 shadow-[0_12px_28px_rgba(23,22,43,0.08)]"
           >
             {(["discover", "campaign"] as const).map((mode) => {
               const selected = productMode === mode;

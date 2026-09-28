@@ -101,9 +101,9 @@ export default function LoginPage() {
   const openSignup = () => { setMode("signup"); setSignupStep("email"); setCode(""); resetMessages(); };
   const openLogin = () => { setMode("login"); setSignupStep("email"); setCode(""); resetMessages(); };
   const openForgot = () => { setMode("forgot"); resetMessages(); };
-  const enterProduct = (needsPlan = true) => {
+  const enterProduct = (needsPlan = true, defaultPath = "/campaigns") => {
     const next = new URLSearchParams(window.location.search).get("next");
-    router.replace(needsPlan ? "/campaigns?onboarding=1" : next || "/campaigns");
+    router.replace(needsPlan ? "/campaigns?onboarding=1" : next || defaultPath);
   };
 
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
@@ -149,8 +149,9 @@ export default function LoginPage() {
     resetMessages();
     loginDemo();
     window.localStorage.setItem(EMPLOYEE_PLAN_KEY, "plus");
+    window.localStorage.setItem("influx-ai-product-mode", "discover");
     setEmployeePlan("plus");
-    enterProduct(false);
+    enterProduct(false, "/creators");
   };
 
   return (

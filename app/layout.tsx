@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Infux AI · Creator Marketing Workspace",
+  title: "Influx AI · Creator Marketing Workspace",
   description:
     "Delegate work to digital employees and run KOL marketing end to end: brief → creators → content → launch → review.",
 };

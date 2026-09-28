@@ -1,5 +1,5 @@
-export const EMPLOYEE_PLAN_KEY = "creatiscout.employee.plan.v2";
-export const PLUS_TRIAL_KEY = "creatiscout.account.plus-trial.v1";
+export const EMPLOYEE_PLAN_KEY = "influx-ai.employee.plan.v2";
+export const PLUS_TRIAL_KEY = "influx-ai.account.plus-trial.v1";
 export const PLUS_TRIAL_DAYS = 14;
 
 export type PlusTrial = {

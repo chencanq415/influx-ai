@@ -1,6 +1,6 @@
-# CreatiScout App
+# Influx AI App
 
-CreatiScout is a bilingual (English / Chinese) product prototype for running creator marketing campaigns in one workspace. It helps brands set up campaigns, match creators, configure automated collaboration follow-up, and review campaign performance.
+Influx AI is a bilingual (English / Chinese) product prototype for running creator marketing campaigns in one workspace. It helps brands set up campaigns, match creators, configure automated collaboration follow-up, and review campaign performance.
 
 > This is a front-end demo built with mock data. Authentication, creator matching, workflow automation, and reporting are presented as interactive product flows and do not connect to production services.
 
@@ -62,7 +62,7 @@ This repository includes a GitHub Actions workflow that deploys every push to `m
 
 The published demo URL is expected at:
 
-`https://chencanq415.github.io/creatiscout/`
+`https://chencanq415.github.io/influx-ai/`
 
 For a local static-export check, run:
 

@@ -27,7 +27,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
       <div className="flex h-screen items-center justify-center bg-page">
         <div className="flex items-center gap-2 text-[13px] font-medium text-slate">
           <LoaderCircle className="h-4 w-4 animate-spin text-brand" />
-          CreatiScout
+          Influx AI
         </div>
       </div>
     );

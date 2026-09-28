@@ -1,4 +1,4 @@
-# CreatiScout 产品设计方案 v1
+# Influx AI 产品设计方案 v1
 
 > 一句话定位：让品牌方"派活儿给数字员工"，数字员工自动跑通从 brief → 达人 → 内容 → 投放 → 复盘的完整 KOL 营销链路；关键卡点回到人工确认。
 
@@ -423,7 +423,7 @@
 当前 `index.html` 是单文件 658 行。建议在 P1 阶段就拆分，避免 P2 之后无法维护：
 
 ```
-creatiscout-app/
+influx-ai-app/
 ├── index.html              # Dashboard 总览（默认入口）
 ├── pages/
 │   ├── campaigns.html      # Campaigns 列表
@@ -486,7 +486,7 @@ creatiscout-app/
 ### 目录结构
 
 ```
-creatiscout-app/
+influx-ai-app/
 ├── app/
 │   ├── (business)/                # 业务侧边栏布局组
 │   │   ├── layout.tsx             # SidebarBusiness + Topbar

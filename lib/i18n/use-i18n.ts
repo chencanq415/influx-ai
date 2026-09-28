@@ -14,7 +14,7 @@ export const useI18nStore = create<I18nState>()(
       locale: "en",
       setLocale: (l) => set({ locale: l }),
     }),
-    { name: "creatiscout.locale.v2" },
+    { name: "influx-ai.locale.v2" },
   ),
 );
 

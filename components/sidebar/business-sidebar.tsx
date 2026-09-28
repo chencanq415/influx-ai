@@ -84,7 +84,7 @@ export function BusinessSidebar() {
   const expanded = !collapsed;
 
   useEffect(() => {
-    const savedMode = window.localStorage.getItem("creatiscout-product-mode");
+    const savedMode = window.localStorage.getItem("influx-ai-product-mode");
     if (savedMode === "discover" || savedMode === "campaign") {
       setProductMode(savedMode);
     }
@@ -93,7 +93,7 @@ export function BusinessSidebar() {
   const changeProductMode = (mode: "discover" | "campaign") => {
     if (mode === productMode) return;
     setProductMode(mode);
-    window.localStorage.setItem("creatiscout-product-mode", mode);
+    window.localStorage.setItem("influx-ai-product-mode", mode);
     if (mode === "discover") {
       setDiscoverSection("creators", "ai-search");
     }
@@ -130,7 +130,7 @@ export function BusinessSidebar() {
           <DropdownMenuTrigger asChild>
             <button
               type="button"
-              aria-label="Switch CreatiScout mode"
+              aria-label="Switch Influx AI mode"
               className={cn(
                 "flex min-w-0 items-center rounded-[8px] text-left transition-colors hover:bg-surface-warm",
                 expanded ? "w-full gap-3 px-2 py-2" : "justify-center p-1",

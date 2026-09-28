@@ -25,8 +25,8 @@ export function AccountMenu({ collapsed = false, compact = false, side = "top", 
   const currentUser = useAuthStore((state) => state.currentUser);
   const logout = useAuthStore((state) => state.logout);
   const workspaceName = currentUser?.workspaceName ?? "Demo Workspace";
-  const email = currentUser?.email ?? "demo@creatiscout.ai";
-  const initials = (currentUser?.name ?? "CreatiScout")
+  const email = currentUser?.email ?? "demo@influx-ai.app";
+  const initials = (currentUser?.name ?? "Influx AI")
     .split(/\s+/)
     .map((part) => part[0])
     .join("")

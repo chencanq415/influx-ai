@@ -16,7 +16,7 @@ const L = {
   demo: { zh: "体验 Demo", en: "Demo" },
   signIn: { zh: "登录", en: "Sign in" },
   signInTitle: { zh: "欢迎回来", en: "Welcome back" },
-  signInSub: { zh: "登录你的 CreatiScout 账号继续工作。", en: "Sign in to your CreatiScout account to continue." },
+  signInSub: { zh: "登录你的 Influx AI 账号继续工作。", en: "Sign in to your Influx AI account to continue." },
   brand: { zh: "品牌方", en: "For Brand" },
   creator: { zh: "创作者", en: "For Creator" },
   email: { zh: "邮箱", en: "Email" },
@@ -41,7 +41,7 @@ const L = {
   resend: { zh: "重新发送", en: "Resend code" },
   mockCode: { zh: "Demo 验证码：246810", en: "Demo verification code: 246810" },
   successTitle: { zh: "注册成功", en: "You're all set" },
-  successSub: { zh: "账号已创建，正在进入 CreatiScout…", en: "Your account is ready. Taking you to CreatiScout…" },
+  successSub: { zh: "账号已创建，正在进入 Influx AI…", en: "Your account is ready. Taking you to Influx AI…" },
   invalidLogin: { zh: "邮箱或密码不正确，请重试。", en: "Incorrect email or password." },
   invalidEmail: { zh: "请输入有效的邮箱地址。", en: "Enter a valid email address." },
   invalidCode: { zh: "验证码不正确，请输入 246810。", en: "Incorrect code. Enter 246810." },
@@ -159,8 +159,8 @@ export default function LoginPage() {
         <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/auth/login-product-hero-v4.png`} alt="Creator campaign workspace" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#fafbfc]/95" />
         <div className="absolute left-10 top-9 flex items-center gap-2.5 rounded-full bg-white/90 px-3 py-2 shadow-sm backdrop-blur">
-          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/logo.png`} alt="CreatiScout" className="h-8 w-8 object-contain" />
-          <span className="text-[17px] font-bold tracking-[-0.025em] text-navy">CreatiScout</span>
+          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/logo.png`} alt="Influx AI" className="h-8 w-8 object-contain" />
+          <span className="text-[17px] font-bold tracking-[-0.025em] text-navy">Influx AI</span>
         </div>
         <div className="absolute bottom-0 left-0 right-0 p-10 text-navy xl:p-14">
           <h1 className="max-w-[500px] text-[34px] font-bold leading-[1.12] tracking-[-0.045em] xl:text-[40px]">{l(L.brandLine)}</h1>
@@ -170,8 +170,8 @@ export default function LoginPage() {
 
       <section className="relative flex min-h-screen items-center justify-center bg-white px-5 py-24 sm:px-10 lg:px-14">
         <div className="absolute left-5 top-5 flex items-center gap-2 lg:hidden">
-          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/logo.png`} alt="CreatiScout" className="h-8 w-8 object-contain" />
-          <span className="text-[17px] font-bold text-navy">CreatiScout</span>
+          <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/brand/logo.png`} alt="Influx AI" className="h-8 w-8 object-contain" />
+          <span className="text-[17px] font-bold text-navy">Influx AI</span>
         </div>
         <div className="absolute right-5 top-5 flex items-center gap-2 sm:right-8 sm:top-7">
           <button type="button" onClick={() => setLocale(locale === "zh" ? "en" : "zh")} className="inline-flex h-9 items-center gap-2 rounded-full border border-border bg-white px-3.5 text-[11px] font-semibold text-slate transition hover:border-border-strong hover:text-ink">

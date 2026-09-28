@@ -1,8 +1,8 @@
-# CreatiScout AI-Native UX Design
+# Influx AI-Native UX Design
 
 ## 1. Product Feeling
 
-CreatiScout should feel like a **KOL digital employee workroom**, not a traditional SaaS dashboard and not a pure chat agent.
+Influx AI should feel like a **KOL digital employee workroom**, not a traditional SaaS dashboard and not a pure chat agent.
 
 The user should feel:
 

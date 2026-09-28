@@ -46,7 +46,7 @@ interface AuthState {
 const demoUser: StoredUser = {
   id: "demo-user",
   name: "Alex Morgan",
-  email: "demo@creatiscout.ai",
+  email: "demo@influx-ai.app",
   workspaceName: "Demo Workspace",
   password: "demo123",
   employeePlan: null,
@@ -97,7 +97,7 @@ export const useAuthStore = create<AuthState>()(
         return { ok: true };
       },
       loginWithGoogle: (role) => {
-        const email = `google.${role}@creatiscout.mock`;
+        const email = `google.${role}@influx-ai.mock`;
         const existing = get().users.find((user) => user.email === email);
         if (existing) {
           set({ currentUser: publicUser(existing) });
@@ -151,7 +151,7 @@ export const useAuthStore = create<AuthState>()(
         }),
     }),
     {
-      name: "creatiscout.auth.v1",
+      name: "influx-ai.auth.v1",
       partialize: (state) => ({ users: state.users, currentUser: state.currentUser }),
       merge: (persisted, current) => {
         const saved = persisted as Partial<AuthState>;

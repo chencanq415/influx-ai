@@ -25,7 +25,6 @@ const L = {
 
 export function CreatorMarketplacePage() {
   const l = useLoc();
-  const productMode = useUIStore((state) => state.productMode);
   const sectionTab = useUIStore((state) => state.discoverSections.creators);
   const setDiscoverSection = useUIStore((state) => state.setDiscoverSection);
   const params = useSearchParams();
@@ -34,7 +33,7 @@ export function CreatorMarketplacePage() {
   const [detailCreatorId, setDetailCreatorId] = useState<string | null>(null);
   const [mode, setMode] = useState<"ai" | "keyword">("ai"); const [query, setQuery] = useState(""); const [platform, setPlatform] = useState("all"); const [shortlisted, setShortlisted] = useState<string[]>([]); const [coverName, setCoverName] = useState("");
   const results = useMemo(() => creators.filter((c) => (!query || `${c.name} ${c.handle} ${c.platform}`.toLowerCase().includes(query.toLowerCase())) && (platform === "all" || c.platform === platform)), [query, platform]);
-  const isDiscover = productMode === "discover";
+  const isDiscover = true;
   const isCampaignPrivate = campaignView === "private";
   const detailCreator = creators.find((creator) => creator.id === detailCreatorId) ?? null;
   useEffect(() => { if (isDiscover && (sectionTab === "discovery" || sectionTab === "private")) setDiscoverDirectoryTab(sectionTab === "private" ? "private" : "marketplace"); }, [isDiscover, sectionTab]);

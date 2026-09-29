@@ -14,13 +14,12 @@ import { TopbarTabs } from "@/components/ui/topbar-tabs";
 export function BusinessTopbar() {
   const pathname = usePathname();
   const t = useT();
-  const productMode = useUIStore((state) => state.productMode);
   const discoverSections = useUIStore((state) => state.discoverSections);
-  const pageTitle = getPageTitle(pathname, productMode, discoverSections, t);
-  const showCreatorSearchTabs = productMode === "discover" && pathname.startsWith("/creators") && (discoverSections.creators === "ai-search" || discoverSections.creators === "cover-search");
-  const showCreatorDirectoryTabs = productMode === "discover" && pathname.startsWith("/creators") && (discoverSections.creators === "discovery" || discoverSections.creators === "private");
-  const showTrendTabs = productMode === "discover" && pathname.startsWith("/creative") && discoverSections.creative === "trends";
-  const showCalendarControls = productMode === "discover" && pathname.startsWith("/creative") && discoverSections.creative === "calendar";
+  const pageTitle = getPageTitle(pathname, discoverSections, t);
+  const showCreatorSearchTabs = pathname.startsWith("/creators") && (discoverSections.creators === "ai-search" || discoverSections.creators === "cover-search");
+  const showCreatorDirectoryTabs = pathname.startsWith("/creators") && (discoverSections.creators === "discovery" || discoverSections.creators === "private");
+  const showTrendTabs = pathname.startsWith("/creative") && discoverSections.creative === "trends";
+  const showCalendarControls = pathname.startsWith("/creative") && discoverSections.creative === "calendar";
 
   return (
     <header
@@ -141,26 +140,23 @@ function PlanSummary() {
 
 function getPageTitle(
   pathname: string,
-  productMode: "discover" | "campaign",
   sections: ReturnType<typeof useUIStore.getState>["discoverSections"],
   t: (key: string) => string,
 ) {
-  if (productMode === "discover") {
-    if (pathname.startsWith("/creators")) {
-      return t({
-        "ai-search": "nav.creatorAiSearch",
-        "cover-search": "nav.creatorCoverSearch",
-        discovery: "nav.creatorDiscovery",
-        outreach: "nav.creatorOutreach",
-        private: "nav.creatorPrivate",
-      }[sections.creators]);
-    }
-    if (pathname.startsWith("/brand-insights")) {
-      return t(sections.brandRadar === "competitors" ? "nav.brandCompetitors" : "nav.brandInsights");
-    }
-    if (pathname.startsWith("/creative")) {
-      return t({ calendar: "nav.creativeCalendar", trends: "nav.creativeTrends", "ai-tools": "nav.creativeAiTools" }[sections.creative]);
-    }
+  if (pathname.startsWith("/creators")) {
+    return t({
+      "ai-search": "nav.creatorAiSearch",
+      "cover-search": "nav.creatorCoverSearch",
+      discovery: "nav.creatorDiscovery",
+      outreach: "nav.creatorOutreach",
+      private: "nav.creatorPrivate",
+    }[sections.creators]);
+  }
+  if (pathname.startsWith("/brand-insights")) {
+    return t(sections.brandRadar === "competitors" ? "nav.brandCompetitors" : "nav.brandInsights");
+  }
+  if (pathname.startsWith("/creative")) {
+    return t({ calendar: "nav.creativeCalendar", trends: "nav.creativeTrends", "ai-tools": "nav.creativeAiTools" }[sections.creative]);
   }
 
   if (pathname.startsWith("/campaigns/new")) return t("nav.campaigns");

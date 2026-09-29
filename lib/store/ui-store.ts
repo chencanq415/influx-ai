@@ -3,7 +3,6 @@ import { campaigns as initialCampaigns } from "@/lib/mock/campaigns";
 import type { Campaign, ChatMessage } from "@/lib/types";
 import { create } from "zustand";
 
-export type ProductMode = "discover" | "campaign";
 export type CreatorSearchTab = "ai" | "cover" | "skill" | "chrome";
 export type TrendBoard = "topic" | "product" | "content";
 export type DiscoverSections = {
@@ -13,9 +12,6 @@ export type DiscoverSections = {
 };
 
 interface UIState {
-  // Top-level product mode
-  productMode: ProductMode;
-  setProductMode: (mode: ProductMode) => void;
   discoverSections: DiscoverSections;
   setDiscoverSection: <K extends keyof DiscoverSections>(area: K, section: DiscoverSections[K]) => void;
   creatorSearchTab: CreatorSearchTab;
@@ -72,8 +68,6 @@ interface UIState {
 }
 
 export const useUIStore = create<UIState>((set, get) => ({
-  productMode: "discover",
-  setProductMode: (productMode) => set({ productMode }),
   discoverSections: { creators: "ai-search", brandRadar: "explore", creative: "calendar" },
   setDiscoverSection: (area, section) =>
     set((state) => ({ discoverSections: { ...state.discoverSections, [area]: section } })),

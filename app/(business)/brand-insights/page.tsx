@@ -59,7 +59,6 @@ const featuredBrands = [
 
 export default function BrandInsightsPage() {
   const l = useLoc();
-  const productMode = useUIStore((state) => state.productMode);
   const sectionTab = useUIStore((state) => state.discoverSections.brandRadar);
   const [brand, setBrand] = useState("");
   const [ready, setReady] = useState(false);
@@ -68,7 +67,7 @@ export default function BrandInsightsPage() {
   const explore = () => setReady(true);
 
   return <main className="min-h-full bg-surface px-6 py-6 lg:px-8"><div className="mx-auto w-full max-w-[1400px]">
-    {productMode === "discover" && sectionTab === "competitors" ? <CompetitorsPanel /> : !ready ? <section>
+    {sectionTab === "competitors" ? <CompetitorsPanel /> : !ready ? <section>
       <div className="relative min-h-[290px] overflow-hidden rounded-[18px] border border-white/90 bg-white/65 shadow-[0_14px_42px_rgba(39,48,71,0.06)] backdrop-blur-xl">
       <div className="pointer-events-none absolute -left-24 -top-36 h-[330px] w-[500px] rounded-full bg-soft-pink/70 blur-3xl" /><div className="pointer-events-none absolute -right-20 bottom-[-150px] h-[360px] w-[500px] rounded-full bg-brand/10 blur-3xl" /><div className="pointer-events-none absolute left-1/2 top-1/2 h-[300px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand/10" />
       {signalDots.map((signal) => <div key={signal.label} className={cn("pointer-events-none absolute hidden items-center gap-2 rounded-[10px] border border-white/80 bg-white/55 px-3 py-2 backdrop-blur-md md:flex", signal.className)}><span className={cn("flex h-7 w-7 items-center justify-center rounded-[7px] text-[14px] font-semibold", signal.tone === "pink" ? "bg-soft-pink text-brand" : "bg-soft-blue text-blue-text")}>{signal.icon}</span><span className="text-[10px] font-semibold text-slate">{signal.label}</span></div>)}

@@ -424,9 +424,8 @@ function CalendarReadOnlyGrid({ month, monthIndex, setMonthIndex, calendarCells 
 export default function CreativePage() {
   const l = useLoc();
   const openChat = useUIStore((state) => state.openChat);
-  const productMode = useUIStore((state) => state.productMode);
   const sectionTab = useUIStore((state) => state.discoverSections.creative);
-  const isDiscover = productMode === "discover";
+  const isDiscover = true;
   const discoverTitle = sectionTab === "calendar" ? L.calendar : sectionTab === "trends" ? L.trendRadar : { zh: "AI 工具", en: "AI Tools" };
   const monthIndex = useUIStore((state) => state.calendarMonthIndex);
   const setMonthIndexStore = useUIStore((state) => state.setCalendarMonthIndex);

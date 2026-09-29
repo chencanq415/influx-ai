@@ -149,7 +149,6 @@ export default function LoginPage() {
     resetMessages();
     loginDemo();
     window.localStorage.setItem(EMPLOYEE_PLAN_KEY, "plus");
-    window.localStorage.setItem("influx-ai-product-mode", "discover");
     setEmployeePlan("plus");
     enterProduct(false, "/creators");
   };

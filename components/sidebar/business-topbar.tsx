@@ -1,13 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Bell, Check, ChevronDown, ChevronLeft, ChevronRight, Gauge, Sparkles } from "lucide-react";
+import { ArrowUpRight, Bell, Check, ChevronLeft, ChevronRight, Gauge, Sparkles } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useLoc, useT } from "@/lib/i18n/use-i18n";
 import { useI18nStore } from "@/lib/i18n/use-i18n";
 import { useUIStore } from "@/lib/store/ui-store";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown";
 import { AccountMenu } from "./account-menu";
 import { CreatorSearchTabs } from "@/components/creator-search-tabs";
 import { TopbarTabs } from "@/components/ui/topbar-tabs";
@@ -21,7 +20,7 @@ export function BusinessTopbar() {
   const showCreatorDirectoryTabs = pathname.startsWith("/creators") && (discoverSections.creators === "discovery" || discoverSections.creators === "private");
   const showTrendTabs = pathname.startsWith("/creative") && discoverSections.creative === "trends";
   const showCalendarControls = pathname.startsWith("/creative") && discoverSections.creative === "calendar";
-  const showBrandReportControls = pathname.startsWith("/brand-insights/");
+  const showBrandReportControls = pathname.startsWith("/brand-insights/") && pathname.split("/").filter(Boolean).length > 1;
 
   return (
     <header
@@ -43,23 +42,13 @@ function BrandReportTopbarControls() {
   const l = useLoc();
   const active = useUIStore((state) => state.brandReportTab);
   const setBrandReportTab = useUIStore((state) => state.setBrandReportTab);
-  const period = useUIStore((state) => state.brandReportPeriod);
-  const setBrandReportPeriod = useUIStore((state) => state.setBrandReportPeriod);
   const tabs = [
     { id: "overview", label: { zh: "总览", en: "Overview" } },
     { id: "marketing", label: { zh: "营销策略", en: "Marketing" } },
     { id: "signals", label: { zh: "市场动态", en: "Market signals" } },
     { id: "assets", label: { zh: "营销资产", en: "Marketing assets" } },
   ] as const;
-  const periods = [
-    { id: "month", label: { zh: "近一个月", en: "Last 30 days" } },
-    { id: "quarter", label: { zh: "近三个月", en: "Last 3 months" } },
-    { id: "half", label: { zh: "近半年", en: "Last 6 months" } },
-    { id: "year", label: { zh: "近一年", en: "Last 12 months" } },
-  ] as const;
-  const currentPeriod = periods.find((item) => item.id === period) ?? periods[0];
-
-  return <div className="flex h-16 min-w-0 items-center gap-3"><Link href="/brand-insights" aria-label={l({ zh: "返回品牌洞察", en: "Back to Brand insights" })} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-slate transition-colors hover:bg-[#F7F7F8] hover:text-ink"><ChevronLeft className="h-3.5 w-3.5" /></Link><p className="shrink-0 text-[15px] font-semibold tracking-[-0.01em] text-ink">{l({ zh: "品牌洞察", en: "Brand insights" })}</p><span className="h-4 w-px shrink-0 bg-border" /><TopbarTabs tabs={tabs.map(({ id, label }) => ({ id, label: l(label) }))} activeId={active} onSelect={(id) => setBrandReportTab(id as typeof active)} ariaLabel={l({ zh: "品牌洞察详情导航", en: "Brand insights detail navigation" })} /><span className="h-4 w-px shrink-0 bg-border" /><DropdownMenu><DropdownMenuTrigger asChild><button type="button" className="inline-flex h-8 min-w-[112px] items-center justify-between gap-2 rounded-[7px] border border-border bg-white px-2.5 text-[11px] font-medium text-ink transition-colors hover:bg-[#F8F8FA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/15"><span>{l(currentPeriod.label)}</span><ChevronDown className="h-3.5 w-3.5 text-muted" /></button></DropdownMenuTrigger><DropdownMenuContent align="start">{periods.map((item) => <DropdownMenuItem key={item.id} onSelect={() => setBrandReportPeriod(item.id)}>{l(item.label)}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu></div>;
+  return <div className="flex h-16 min-w-0 items-center gap-3"><Link href="/brand-insights" aria-label={l({ zh: "返回品牌洞察", en: "Back to Brand insights" })} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-slate transition-colors hover:bg-[#F7F7F8] hover:text-ink"><ChevronLeft className="h-3.5 w-3.5" /></Link><span className="h-4 w-px shrink-0 bg-border" /><TopbarTabs tabs={tabs.map(({ id, label }) => ({ id, label: l(label) }))} activeId={active} onSelect={(id) => setBrandReportTab(id as typeof active)} ariaLabel={l({ zh: "品牌洞察详情导航", en: "Brand insights detail navigation" })} /></div>;
 }
 
 function CreatorDirectoryTabs() {

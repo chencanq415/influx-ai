@@ -781,58 +781,6 @@ export default function CreativePage() {
           </div>
         </section>}
 
-        {(!isDiscover || sectionTab === "trends") && <section className="mt-7 pb-4">
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <h2 className="text-[18px] font-bold tracking-[-0.02em] text-navy">
-                {l(L.inspiration)}
-              </h2>
-              <p className="mt-1 text-[10.5px] text-muted">{l(L.inspirationDesc)}</p>
-            </div>
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/context-lab">{l(L.viewAll)}</Link>
-            </Button>
-          </div>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {inspirationCards.map((card) => {
-              const Icon = card.icon;
-              const content = (
-                <>
-                  <span className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-surface-warm text-slate">
-                    <Icon className="h-4 w-4" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-[12px] font-semibold text-ink">{l(card.title)}</h3>
-                    <p className="mt-1 text-[9.5px] leading-4 text-muted">{l(card.description)}</p>
-                    <div className="mt-2 inline-flex items-center gap-1 text-[9px] font-semibold text-brand">
-                      <Flame className="h-3 w-3" />
-                      {l(card.meta)}
-                    </div>
-                  </div>
-                  <ArrowRight className="h-3.5 w-3.5 flex-shrink-0 text-muted" />
-                </>
-              );
-              return "href" in card && card.href ? (
-                <Link
-                  key={card.title.en}
-                  href={card.href}
-                  className="flex items-start gap-3 rounded-[13px] border border-border bg-surface p-4 shadow-card transition-colors hover:border-border-strong"
-                >
-                  {content}
-                </Link>
-              ) : (
-                <button
-                  key={card.title.en}
-                  type="button"
-                  onClick={() => openChat("lucy")}
-                  className="flex items-start gap-3 rounded-[13px] border border-border bg-surface p-4 text-left shadow-card transition-colors hover:border-border-strong"
-                >
-                  {content}
-                </button>
-              );
-            })}
-          </div>
-        </section>}
       </div>
     </div>
   );

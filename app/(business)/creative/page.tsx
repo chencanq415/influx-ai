@@ -12,15 +12,19 @@ import {
   ChevronLeft,
   ChevronRight,
   Clapperboard,
+  Download,
   Eye,
+  FileCheck2,
   Flame,
   Images,
+  ImagePlus,
   Lightbulb,
   PackageSearch,
   PenLine,
   Play,
   Radar,
   Search,
+  ShieldCheck,
   Sparkles,
   Tags,
   Telescope,
@@ -215,6 +219,14 @@ const studios = [
     action: "link" as const,
     href: "/context-lab",
   },
+] as const;
+
+const aiToolEntries = [
+  { title: { zh: "AI 审稿", en: "AI review" }, description: { zh: "检查内容是否符合品牌要求，识别禁忌词、竞品露出与表达风险。", en: "Review content for brand fit, competitor mentions, and expression risks." }, icon: FileCheck2, href: "/context-lab?tool=ai-review" },
+  { title: { zh: "商品转视频", en: "Product to video" }, description: { zh: "把商品图和卖点整理成适合社媒发布的短视频内容。", en: "Turn product imagery and claims into short-form social video." }, icon: Clapperboard, href: "/context-lab?tool=product-video" },
+  { title: { zh: "商品图制作", en: "Product image maker" }, description: { zh: "快速制作适合活动 Brief、社媒与商品页使用的商品视觉。", en: "Create product visuals for briefs, social posts, and product pages." }, icon: ImagePlus, href: "/context-lab?tool=product-image" },
+  { title: { zh: "假粉检测", en: "Fake follower check" }, description: { zh: "评估达人账号的粉丝质量、异常互动与受众真实性。", en: "Assess follower quality, unusual engagement, and audience authenticity." }, icon: ShieldCheck, href: "/context-lab?tool=audience-quality" },
+  { title: { zh: "视频下载", en: "Video download" }, description: { zh: "保存公开内容作为案例、审稿素材或活动参考。", en: "Save public videos for references, review material, and campaign research." }, icon: Download, href: "/context-lab?tool=video-download" },
 ] as const;
 
 const inspirationCards = [
@@ -446,7 +458,7 @@ export default function CreativePage() {
   return (
     <div className="min-h-full bg-surface px-6 py-3 lg:px-10">
       <div className="w-full">
-        {isDiscover ? sectionTab === "ai-tools" && <header className="flex h-14 items-center"><h1 className="text-[30px] font-bold tracking-[-0.035em] text-navy">{l(discoverTitle)}</h1></header> : <header><h1 className="text-[26px] font-bold tracking-[-0.03em] text-navy">{l(L.title)}</h1><p className="mt-1 text-[11.5px] text-slate">{l(L.subtitle)}</p></header>}
+        {isDiscover ? null : <header><h1 className="text-[26px] font-bold tracking-[-0.03em] text-navy">{l(L.title)}</h1><p className="mt-1 text-[11.5px] text-slate">{l(L.subtitle)}</p></header>}
 
         {false && <section className="mt-4 overflow-hidden rounded-[14px] border border-border bg-surface shadow-card">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-2.5">
@@ -729,57 +741,7 @@ export default function CreativePage() {
 
         {(!isDiscover || sectionTab === "trends") && <div className={isDiscover ? "-mt-3" : ""}><TrendRankings board={trendBoard} onBoardChange={setTrendBoard} range={trendRange} onRangeChange={setTrendRange} platform={trendPlatform} onPlatformChange={setTrendPlatform} region={trendRegion} onRegionChange={setTrendRegion} /></div>}
 
-        {(!isDiscover || sectionTab === "ai-tools") && <section className={isDiscover ? "mt-5" : "mt-7"}>
-          <div>
-            <h2 className="text-[18px] font-bold tracking-[-0.02em] text-navy">
-              {l(L.creativeStudio)}
-            </h2>
-            <p className="mt-1 text-[10.5px] text-muted">{l(L.creativeStudioDesc)}</p>
-          </div>
-          <div className="mt-4 grid gap-4 lg:grid-cols-3">
-            {studios.map((studio, index) => {
-              const content = (
-                <>
-                  <StudioPreview index={index} />
-                  <div className="p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-[15px] font-bold text-navy">{l(studio.title)}</h3>
-                        <p className="mt-2 min-h-[48px] text-[10px] leading-[17px] text-muted">
-                          {l(studio.description)}
-                        </p>
-                      </div>
-                      <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-soft-pink text-brand transition-transform group-hover:translate-x-0.5">
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </span>
-                    </div>
-                    <span className="mt-3 inline-flex rounded-full border border-border px-2.5 py-1 text-[8.5px] font-semibold text-brand">
-                      {l(studio.action === "chat" ? L.startCreating : L.openStudio)}
-                    </span>
-                  </div>
-                </>
-              );
-              return studio.action === "chat" ? (
-                <button
-                  key={studio.title.en}
-                  type="button"
-                  onClick={() => openChat("lucy")}
-                  className="group overflow-hidden rounded-[15px] border border-border bg-surface p-2 text-left shadow-card transition-all hover:-translate-y-0.5 hover:border-border-strong hover:shadow-elev"
-                >
-                  {content}
-                </button>
-              ) : (
-                <Link
-                  key={studio.title.en}
-                  href={studio.href}
-                  className="group overflow-hidden rounded-[15px] border border-border bg-surface p-2 text-left shadow-card transition-all hover:-translate-y-0.5 hover:border-border-strong hover:shadow-elev"
-                >
-                  {content}
-                </Link>
-              );
-            })}
-          </div>
-        </section>}
+        {(!isDiscover || sectionTab === "ai-tools") && <section className={isDiscover ? "pt-3" : "mt-7"}><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">{aiToolEntries.map((tool) => { const Icon = tool.icon; return <Link key={tool.title.en} href={tool.href} className="group flex min-h-[184px] flex-col rounded-[14px] border border-border bg-white p-5 transition-colors hover:border-border-strong hover:bg-[#FCFCFD]"><span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-page text-slate transition-colors group-hover:text-brand"><Icon className="h-5 w-5" /></span><h2 className="mt-5 text-[15px] font-semibold text-ink">{l(tool.title)}</h2><p className="mt-2 max-w-[310px] text-[11.5px] leading-5 text-slate">{l(tool.description)}</p><span className="mt-auto flex items-center gap-1 pt-5 text-[11px] font-medium text-slate group-hover:text-ink">{l({ zh: "打开工具", en: "Open tool" })}<ArrowRight className="h-3.5 w-3.5" /></span></Link>; })}</div></section>}
 
       </div>
     </div>

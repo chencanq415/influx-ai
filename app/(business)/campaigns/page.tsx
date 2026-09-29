@@ -134,19 +134,7 @@ function CampaignsContent() {
 
 	return (
 		<>
-			<div className="space-y-6 p-7 lg:p-8">
-				<header className="flex items-end justify-between gap-6">
-					<div>
-						<h1 className="text-[28px] font-bold tracking-[-0.025em] text-navy">
-							{l(L.title)}
-						</h1>
-						<p className="mt-1.5 text-[13px] text-slate">{l(L.subtitle)}</p>
-					</div>
-					<Button onClick={() => setCreateOpen(true)}>
-						<Plus className="h-4 w-4" /> {l(L.newCampaign)}
-					</Button>
-				</header>
-
+			<div className="space-y-5 p-6 lg:p-8">
 				<div className="flex flex-wrap items-center gap-2 border-b border-border pb-4">
 					<FilterChip
 						label={l(L.all)}
@@ -167,14 +155,19 @@ function CampaignsContent() {
 							onClick={() => setFilter(status)}
 						/>
 					))}
-					<div className="ml-auto flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5">
-						<Search className="h-3.5 w-3.5 text-muted" />
-						<input
-							value={query}
-							onChange={(event) => setQuery(event.target.value)}
-							placeholder={l(L.searchPlaceholder)}
-							className="w-52 border-0 bg-transparent text-[13px] outline-none placeholder:text-muted"
-						/>
+					<div className="ml-auto flex items-center gap-2">
+						<div className="flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5">
+							<Search className="h-3.5 w-3.5 text-muted" />
+							<input
+								value={query}
+								onChange={(event) => setQuery(event.target.value)}
+								placeholder={l(L.searchPlaceholder)}
+								className="w-52 border-0 bg-transparent text-[13px] outline-none placeholder:text-muted"
+							/>
+						</div>
+						<Button onClick={() => setCreateOpen(true)}>
+							<Plus className="h-4 w-4" /> {l(L.newCampaign)}
+						</Button>
 					</div>
 				</div>
 

@@ -224,11 +224,9 @@ export default function CollaborationsPage() {
   });
 
   return (
-    <div className={cn("min-h-full bg-surface", embedded ? "px-6 py-5 lg:px-8" : "px-6 py-5 lg:px-8")}>
+    <div className={cn("min-h-full bg-surface", embedded ? "px-6 py-5 lg:px-8" : "px-6 py-6 lg:px-8")}>
       <div className="w-full">
-        {!embedded && <div><h1 className="text-[30px] font-bold tracking-[-0.03em] text-navy">{l(L.title)}</h1><p className="mt-1.5 text-[13px] text-slate">{l(L.subtitle)}</p></div>}
-
-        <nav className={embedded ? "" : "mt-5"} aria-label="Collaboration progress">
+        <nav aria-label="Collaboration progress">
           <div className="flex w-full min-w-0 items-center py-1">
             {stages.map((stage, index) => {
               const active = stageFilter === stage;
@@ -240,7 +238,7 @@ export default function CollaborationsPage() {
           </div>
         </nav>
 
-        <div className="mt-5 flex flex-wrap gap-2 rounded-[13px] border border-border bg-surface p-4">
+        <div className="mt-4 flex flex-wrap gap-2 rounded-[13px] border border-border bg-surface p-4">
           <div className="relative min-w-[260px] flex-1"><Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={l(L.search)} className="h-10 w-full rounded-[9px] border border-border bg-page pl-9 pr-3 text-[12px] outline-none focus:border-brand/40" /></div>
           {!campaignId && <Select value={campaignFilter} onChange={setCampaignFilter} label={l(L.allCampaigns)} options={campaigns.map((campaign) => ({ value: campaign.id, label: l(campaign.name) }))} />}
           {canFilterByStatus && <Select value={statusFilter} onChange={setStatusFilter} label={l(L.allStatuses)} options={(stageSubStatuses[stageFilter] ?? []).map((status) => ({ value: status, label: l(subStatusLabels[status]) }))} />}

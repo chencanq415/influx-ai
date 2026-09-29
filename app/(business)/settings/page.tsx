@@ -3,6 +3,7 @@
 import { Bell, Check, CreditCard, ShieldCheck, UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Switch } from "@/components/ui/switch";
+import Link from "next/link";
 import { useAuthStore } from "@/lib/account/auth-store";
 import { useLoc } from "@/lib/i18n/use-i18n";
 
@@ -23,7 +24,7 @@ export default function SettingsPage() {
   const save = () => { updateCurrentUser({ name: name.trim() || "Alex Morgan", email: email.trim() || "demo@influx-ai.app", workspaceName: workspaceName.trim() || "Demo Workspace" }); setSaved(true); window.setTimeout(() => setSaved(false), 1800); };
   return <main className="min-h-full bg-surface px-6 py-6 lg:px-8"><div className="mx-auto max-w-[980px]"><header><h1 className="text-[30px] font-bold tracking-[-0.035em] text-navy">{l(L.title)}</h1><p className="mt-1.5 text-[13px] text-slate">{l(L.subtitle)}</p></header><div className="mt-6 space-y-5">
     <SettingsCard icon={<UserRound className="h-4 w-4" />} title={l(L.profile)}><div className="grid gap-4 sm:grid-cols-2"><Field label={l(L.name)} value={name} onChange={setName} /><Field label={l(L.email)} value={email} onChange={setEmail} /></div><div className="mt-4"><Field label={l(L.workspaceName)} value={workspaceName} onChange={setWorkspaceName} /></div><div className="mt-5 flex justify-end"><button type="button" onClick={save} className="inline-flex h-9 items-center gap-1.5 rounded-control bg-brand px-3.5 text-[11px] font-semibold text-white shadow-cta hover:bg-brand-hover">{saved ? <Check className="h-3.5 w-3.5" /> : null}{saved ? l(L.saved) : l(L.save)}</button></div></SettingsCard>
-    <div className="grid gap-5 lg:grid-cols-2"><SettingsCard icon={<CreditCard className="h-4 w-4" />} title={l(L.workspace)}><div className="rounded-[10px] bg-surface-warm p-3.5"><p className="text-[10px] text-muted">{l(L.plan)}</p><p className="mt-1 text-[13px] font-semibold text-ink">{currentUser?.employeePlan === "plus" ? l(L.trial) : "Free"}</p><button type="button" className="mt-3 text-[10.5px] font-semibold text-brand hover:text-brand-hover">{l(L.upgrade)} →</button></div></SettingsCard><SettingsCard icon={<ShieldCheck className="h-4 w-4" />} title={l(L.security)}><p className="text-[11px] leading-relaxed text-slate">{l(L.securityHint)}</p></SettingsCard></div>
+    <div className="grid gap-5 lg:grid-cols-2"><SettingsCard icon={<CreditCard className="h-4 w-4" />} title={l(L.workspace)}><div className="rounded-[10px] bg-surface-warm p-3.5"><p className="text-[10px] text-muted">{l(L.plan)}</p><p className="mt-1 text-[13px] font-semibold text-ink">{currentUser?.employeePlan === "plus" ? l(L.trial) : "Free"}</p><Link href="/settings/plan" className="mt-3 inline-flex text-[10.5px] font-semibold text-brand hover:text-brand-hover">{l(L.upgrade)} →</Link></div></SettingsCard><SettingsCard icon={<ShieldCheck className="h-4 w-4" />} title={l(L.security)}><p className="text-[11px] leading-relaxed text-slate">{l(L.securityHint)}</p></SettingsCard></div>
     <SettingsCard icon={<Bell className="h-4 w-4" />} title={l(L.notifications)}><ToggleRow title={l(L.emailNotices)} hint={l(L.emailNoticesHint)} checked={emailNotices} onCheckedChange={setEmailNotices} /><ToggleRow title={l(L.aiNotices)} hint={l(L.aiNoticesHint)} checked={aiNotices} onCheckedChange={setAiNotices} /></SettingsCard>
   </div></div></main>;
 }

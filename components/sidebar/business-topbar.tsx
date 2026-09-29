@@ -112,7 +112,7 @@ function PlanSummary() {
   return (
     <div className="group relative">
       <Link
-        href="/settings"
+        href="/settings/plan"
         aria-label="View Plus plan details"
         className="flex h-9 items-center gap-2 rounded-full border border-border bg-white px-3.5 text-[12px] transition-colors hover:bg-[#F8F8FA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/15"
       >
@@ -131,7 +131,7 @@ function PlanSummary() {
             <div><p className="text-[10px] text-muted">{t("account.usage")}</p><p className="mt-1 flex items-center gap-1.5 text-[22px] font-medium tracking-[-0.03em] text-ink"><Gauge className="h-4 w-4 text-slate" />32%</p></div>
           </div>
           <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white"><span className="block h-full w-[32%] rounded-full bg-ink" /></div>
-          <Link href="/settings" className="mt-4 inline-flex items-center gap-1 text-[11px] font-medium text-slate transition-colors hover:text-ink">{t("account.viewPlan")}<ArrowUpRight className="h-3.5 w-3.5" /></Link>
+          <Link href="/settings/plan" className="mt-4 inline-flex items-center gap-1 text-[11px] font-medium text-slate transition-colors hover:text-ink">{t("account.viewPlan")}<ArrowUpRight className="h-3.5 w-3.5" /></Link>
         </section>
       </div>
     </div>
@@ -168,6 +168,7 @@ function getPageTitle(
   if (pathname.startsWith("/brand-insights")) return t("nav.brandInsights");
   if (pathname.startsWith("/employees")) return t("nav.employees");
   if (pathname.startsWith("/messages")) return t("account.messageCenter");
+  if (pathname.startsWith("/settings/plan")) return t("account.viewPlan");
   if (pathname.startsWith("/settings")) return t("account.accountSettings");
   if (pathname.startsWith("/tracking")) return t("nav.tracking");
   if (pathname.startsWith("/pool")) return t("nav.pool");

@@ -1,12 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown";
 import { useLoc } from "@/lib/i18n/use-i18n";
+import { useUIStore } from "@/lib/store/ui-store";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, ChevronDown, ChevronLeft, ChevronRight, CircleDollarSign, FileImage, Globe2, ImageIcon, MessageSquareText, Radar, Sparkles, TrendingUp, UsersRound } from "lucide-react";
+import { ArrowUpRight, ChevronRight, CircleDollarSign, FileImage, Globe2, ImageIcon, MessageSquareText, Radar, Sparkles, TrendingUp, UsersRound } from "lucide-react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 const brands: Record<string, { name: string; website: string; cover: string; logo?: string; category: { zh: string; en: string } }> = {
@@ -19,47 +19,27 @@ const brands: Record<string, { name: string; website: string; cover: string; log
 };
 
 const L = {
-  back: { zh: "返回 BrandRadar", en: "Back to BrandRadar" },
   overview: { zh: "总览", en: "Overview" },
   marketing: { zh: "营销策略", en: "Marketing" },
   signals: { zh: "市场动态", en: "Market signals" },
   assets: { zh: "营销资产", en: "Marketing assets" },
   report: { zh: "品牌报告", en: "Brand report" },
   updated: { zh: "已更新至今天", en: "Updated today" },
-  month: { zh: "近一个月", en: "Last 30 days" },
-  quarter: { zh: "近三个月", en: "Last 3 months" },
-  half: { zh: "近半年", en: "Last 6 months" },
-  year: { zh: "近一年", en: "Last 12 months" },
   mentions: { zh: "品牌提及", en: "Brand mentions" },
   sentiment: { zh: "正向情感", en: "Positive sentiment" },
   share: { zh: "品类声量", en: "Category share" },
   creator: { zh: "达人内容增长", en: "Creator content growth" },
 } as const;
 
-type Tab = "overview" | "marketing" | "signals" | "assets";
-
 export default function BrandReportPage() {
   const params = useParams<{ brand: string }>();
-  const router = useRouter();
   const l = useLoc();
   const brand = brands[params.brand?.toLowerCase()] ?? brands.shein;
-  const [tab, setTab] = useState<Tab>("overview");
-  const [period, setPeriod] = useState<"month" | "quarter" | "half" | "year">("month");
-  const tabs: { id: Tab; label: string }[] = [
-    { id: "overview", label: l(L.overview) }, { id: "marketing", label: l(L.marketing) },
-    { id: "signals", label: l(L.signals) }, { id: "assets", label: l(L.assets) },
-  ];
-  const periods = ["month", "quarter", "half", "year"] as const;
-  const periodLabels = { month: l(L.month), quarter: l(L.quarter), half: l(L.half), year: l(L.year) };
+  const tab = useUIStore((state) => state.brandReportTab);
 
-  return <main className="min-h-full bg-surface"><div className="flex h-12 items-end border-b border-border px-6 lg:px-8"><Link href="/brand-insights" className="mb-2 flex h-8 w-8 items-center justify-center rounded-[8px] text-slate hover:bg-surface-warm hover:text-ink" aria-label={l(L.back)}><ChevronLeft className="h-4 w-4" /></Link>{tabs.map((item) => <button key={item.id} type="button" onClick={() => setTab(item.id)} className={cn("relative h-12 px-5 text-[12.5px] font-medium", tab === item.id ? "text-brand" : "text-slate hover:text-ink")}>{item.label}{tab === item.id && <span className="absolute inset-x-4 bottom-0 h-0.5 rounded-full bg-brand" />}</button>)}<div className="mb-2 ml-auto flex items-center gap-2"><Picker label={periodLabels[period]} options={periods.map((item) => ({ value: item, label: periodLabels[item] }))} onSelect={(value) => setPeriod(value as typeof period)} /><Picker label={brand.name} options={Object.entries(brands).map(([id, item]) => ({ value: id, label: item.name }))} onSelect={(value) => router.push(`/brand-insights/${value}`)} /></div></div>
-    <div className="mx-auto w-full max-w-[1400px] px-6 py-6 lg:px-8">{tab === "overview" && <section className="relative overflow-hidden rounded-[16px] border border-border bg-white"><div className="absolute inset-y-0 right-0 w-[42%] bg-[#f2f3f5]" /><img src={brand.cover} alt="" className="absolute inset-y-0 right-0 w-[42%] object-cover opacity-75" /><div className="absolute inset-y-0 right-[38%] w-28 bg-gradient-to-r from-white via-white/90 to-transparent" /><div className="relative flex min-h-[150px] items-center p-6"><span className="mr-4 flex h-14 w-14 items-center justify-center overflow-hidden rounded-[14px] border border-border bg-white shadow-sm">{brand.logo ? <img src={brand.logo} alt={`${brand.name} logo`} className="h-full w-full object-contain p-2.5" /> : <Globe2 className="h-5 w-5 text-slate" />}</span><div><div className="flex items-center gap-2"><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">{l(L.report)}</p><span className="h-1 w-1 rounded-full bg-muted" /><p className="text-[10px] text-muted">{l(brand.category)}</p></div><h1 className="mt-1 text-[30px] font-bold tracking-[-0.045em] text-navy">{brand.name}</h1><div className="mt-1 flex items-center gap-2 text-[11px] text-slate"><span>{brand.website}</span><span className="h-1 w-1 rounded-full bg-muted" /><span>{l(L.updated)}</span></div></div></div></section>}
+  return <main className="min-h-full bg-surface"><div className="mx-auto w-full max-w-[1400px] px-6 py-6 lg:px-8">{tab === "overview" && <section className="relative overflow-hidden rounded-[16px] border border-border bg-white"><div className="absolute inset-y-0 right-0 w-[42%] bg-[#f2f3f5]" /><img src={brand.cover} alt="" className="absolute inset-y-0 right-0 w-[42%] object-cover opacity-75" /><div className="absolute inset-y-0 right-[38%] w-28 bg-gradient-to-r from-white via-white/90 to-transparent" /><div className="relative flex min-h-[150px] items-center p-6"><span className="mr-4 flex h-14 w-14 items-center justify-center overflow-hidden rounded-[14px] border border-border bg-white shadow-sm">{brand.logo ? <img src={brand.logo} alt={`${brand.name} logo`} className="h-full w-full object-contain p-2.5" /> : <Globe2 className="h-5 w-5 text-slate" />}</span><div><div className="flex items-center gap-2"><p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted">{l(L.report)}</p><span className="h-1 w-1 rounded-full bg-muted" /><p className="text-[10px] text-muted">{l(brand.category)}</p></div><h1 className="mt-1 text-[30px] font-bold tracking-[-0.045em] text-navy">{brand.name}</h1><div className="mt-1 flex items-center gap-2 text-[11px] text-slate"><span>{brand.website}</span><span className="h-1 w-1 rounded-full bg-muted" /><span>{l(L.updated)}</span></div></div></div></section>}
       <div className={tab === "overview" ? "mt-5" : "mt-0"}>{tab === "overview" && <Overview brand={brand.name} />}{tab === "marketing" && <Marketing />}{tab === "signals" && <Signals />}{tab === "assets" && <Assets brand={brand} />}</div>
     </div></main>;
-}
-
-function Picker({ label, options, onSelect }: { label: string; options: { value: string; label: string }[]; onSelect: (value: string) => void }) {
-  return <DropdownMenu><DropdownMenuTrigger asChild><button type="button" className="inline-flex h-8 min-w-[132px] items-center justify-between gap-4 rounded-[8px] border border-border bg-white px-3 text-[11px] font-medium text-ink hover:border-border-strong"><span className="truncate">{label}</span><ChevronDown className="h-3.5 w-3.5 shrink-0 text-muted" /></button></DropdownMenuTrigger><DropdownMenuContent align="end">{options.map((option) => <DropdownMenuItem key={option.value} onSelect={() => onSelect(option.value)}>{option.label}</DropdownMenuItem>)}</DropdownMenuContent></DropdownMenu>;
 }
 
 function Overview({ brand }: { brand: string }) {

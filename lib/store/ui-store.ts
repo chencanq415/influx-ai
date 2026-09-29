@@ -5,6 +5,8 @@ import { create } from "zustand";
 
 export type CreatorSearchTab = "ai" | "cover" | "skill" | "chrome";
 export type TrendBoard = "topic" | "product" | "content";
+export type BrandReportTab = "overview" | "marketing" | "signals" | "assets";
+export type BrandReportPeriod = "month" | "quarter" | "half" | "year";
 export type DiscoverSections = {
   creators: "ai-search" | "cover-search" | "discovery" | "outreach" | "private";
   brandRadar: "explore" | "competitors";
@@ -18,6 +20,10 @@ interface UIState {
   setCreatorSearchTab: (tab: CreatorSearchTab) => void;
   trendBoard: TrendBoard;
   setTrendBoard: (board: TrendBoard) => void;
+  brandReportTab: BrandReportTab;
+  setBrandReportTab: (tab: BrandReportTab) => void;
+  brandReportPeriod: BrandReportPeriod;
+  setBrandReportPeriod: (period: BrandReportPeriod) => void;
   calendarMonthIndex: number;
   setCalendarMonthIndex: (index: number) => void;
 
@@ -75,6 +81,10 @@ export const useUIStore = create<UIState>((set, get) => ({
   setCreatorSearchTab: (creatorSearchTab) => set({ creatorSearchTab }),
   trendBoard: "topic",
   setTrendBoard: (trendBoard) => set({ trendBoard }),
+  brandReportTab: "overview",
+  setBrandReportTab: (brandReportTab) => set({ brandReportTab }),
+  brandReportPeriod: "month",
+  setBrandReportPeriod: (brandReportPeriod) => set({ brandReportPeriod }),
   calendarMonthIndex: 0,
   setCalendarMonthIndex: (calendarMonthIndex) => set({ calendarMonthIndex: Math.min(2, Math.max(0, calendarMonthIndex)) }),
 

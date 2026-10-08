@@ -10,16 +10,18 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { AccountMenu } from "./account-menu";
 import { CreatorSearchTabs } from "@/components/creator-search-tabs";
 import { TopbarTabs } from "@/components/ui/topbar-tabs";
+import { getFreeTool } from "@/lib/free-tools";
 
 export function BusinessTopbar() {
   const pathname = usePathname();
+  const showToolControls = pathname.startsWith("/creative/tools/");
   const t = useT();
   const discoverSections = useUIStore((state) => state.discoverSections);
   const pageTitle = getPageTitle(pathname, discoverSections, t);
   const showCreatorSearchTabs = pathname.startsWith("/creators") && (discoverSections.creators === "ai-search" || discoverSections.creators === "cover-search");
   const showCreatorDirectoryTabs = pathname.startsWith("/creators") && (discoverSections.creators === "discovery" || discoverSections.creators === "private");
-  const showTrendTabs = pathname.startsWith("/creative") && discoverSections.creative === "trends";
-  const showCalendarControls = pathname.startsWith("/creative") && discoverSections.creative === "calendar";
+  const showTrendTabs = !showToolControls && pathname.startsWith("/creative") && discoverSections.creative === "trends";
+  const showCalendarControls = !showToolControls && pathname.startsWith("/creative") && discoverSections.creative === "calendar";
   const showBrandReportControls = pathname.startsWith("/brand-insights/") && pathname.split("/").filter(Boolean).length > 1;
 
   return (
@@ -28,7 +30,7 @@ export function BusinessTopbar() {
         showCreatorSearchTabs ? "lg:pl-8" : "lg:pl-10"
       }`}
     >
-      <div className="min-w-0">{showCreatorSearchTabs ? <CreatorSearchTabs /> : showCreatorDirectoryTabs ? <CreatorDirectoryTabs /> : showTrendTabs ? <TrendTopbarTabs /> : showCalendarControls ? <CalendarTopbarControls /> : showBrandReportControls ? <BrandReportTopbarControls /> : <p className="truncate text-[15px] font-semibold tracking-[-0.01em] text-ink" aria-live="polite">{pageTitle}</p>}</div>
+      <div className="min-w-0">{showToolControls ? <ToolTopbarControls /> : showCreatorSearchTabs ? <CreatorSearchTabs /> : showCreatorDirectoryTabs ? <CreatorDirectoryTabs /> : showTrendTabs ? <TrendTopbarTabs /> : showCalendarControls ? <CalendarTopbarControls /> : showBrandReportControls ? <BrandReportTopbarControls /> : <p className="truncate text-[15px] font-semibold tracking-[-0.01em] text-ink" aria-live="polite">{pageTitle}</p>}</div>
       <div className="ml-6 flex flex-shrink-0 items-center gap-3">
         <PlanSummary />
         <TopbarUtilities />
@@ -36,6 +38,15 @@ export function BusinessTopbar() {
       </div>
     </header>
   );
+}
+
+function ToolTopbarControls() {
+  const l = useLoc();
+  const pathname = usePathname();
+  const tool = getFreeTool(pathname.split("/").filter(Boolean).at(-1) ?? "");
+  const active = useUIStore((s) => s.toolReviewTab);
+  const setTab = useUIStore((s) => s.setToolReviewTab);
+  return <div className="flex h-16 min-w-0 items-center gap-3"><Link href="/creative" onClick={() => useUIStore.getState().setDiscoverSection("creative", "ai-tools")} aria-label={l({ zh: "返回 AI 工具", en: "Back to AI Tools" })} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-slate hover:bg-page"><ChevronLeft className="h-3.5 w-3.5" /></Link><span className="h-4 w-px bg-border" />{tool?.slug === "ai-brief-reviewer" ? <TopbarTabs tabs={[{ id: "upload", label: l({ zh: "上传作品", en: "Upload content" }) }, { id: "results", label: l({ zh: "审核结果", en: "Review results" }) }]} activeId={active} onSelect={(id) => setTab(id as typeof active)} ariaLabel={l({ zh: "AI 审稿导航", en: "Content review navigation" })} /> : <span className="truncate text-[15px] font-medium text-ink">{tool ? l(tool.title) : l({ zh: "AI 工具", en: "AI Tools" })}</span>}</div>;
 }
 
 function BrandReportTopbarControls() {

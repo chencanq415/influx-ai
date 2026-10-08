@@ -13,6 +13,8 @@ export type DiscoverSections = {
 };
 
 interface UIState {
+  toolReviewTab: "upload" | "results";
+  setToolReviewTab: (tab: "upload" | "results") => void;
   discoverSections: DiscoverSections;
   setDiscoverSection: <K extends keyof DiscoverSections>(area: K, section: DiscoverSections[K]) => void;
   creatorSearchTab: CreatorSearchTab;
@@ -71,6 +73,8 @@ interface UIState {
 }
 
 export const useUIStore = create<UIState>((set, get) => ({
+  toolReviewTab: "upload",
+  setToolReviewTab: (toolReviewTab) => set({ toolReviewTab }),
   discoverSections: { creators: "ai-search", brandRadar: "explore", creative: "calendar" },
   setDiscoverSection: (area, section) =>
     set((state) => ({ discoverSections: { ...state.discoverSections, [area]: section } })),

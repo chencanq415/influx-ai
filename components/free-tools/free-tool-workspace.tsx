@@ -1,12 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { ContentReviewWorkspace } from "./content-review-workspace";
 import type { FreeTool, ToolIconId } from "@/lib/free-tools";
-import { toolCategories } from "@/lib/free-tools";
 import { useLoc } from "@/lib/i18n/use-i18n";
 import { cn } from "@/lib/utils";
 import {
-  ArrowLeft,
   AtSign,
   BarChart3,
   Calculator,
@@ -30,7 +29,6 @@ import {
   WalletCards,
   Youtube,
 } from "lucide-react";
-import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
 
 const icons: Record<ToolIconId, React.ElementType> = {
@@ -109,7 +107,6 @@ export function FreeToolWorkspace({ tool }: { tool: FreeTool }) {
   const [generated, setGenerated] = useState(false);
   const [copied, setCopied] = useState<number | null>(null);
   const Icon = icons[tool.icon] ?? Sparkles;
-  const category = toolCategories.find((item) => item.id === tool.category) ?? toolCategories[0];
   const results = useMemo(
     () => (generated ? [calculate(tool, values, l), ...tool.examples.slice(1).map(l)] : []),
     [generated, l, tool, values],
@@ -126,26 +123,11 @@ export function FreeToolWorkspace({ tool }: { tool: FreeTool }) {
     window.setTimeout(() => setCopied(null), 1200);
   };
 
+  if (tool.slug === "ai-brief-reviewer") return <ContentReviewWorkspace />;
+
   return (
     <main className="min-h-full bg-surface">
       <div className="mx-auto w-full max-w-[1380px] px-6 py-5 lg:px-8">
-        <div className="flex flex-wrap items-center gap-2 text-[10.5px] text-slate">
-          <Link
-            href="/creative"
-            className="inline-flex h-8 items-center gap-1.5 rounded-[8px] px-2 hover:bg-page hover:text-ink"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            {l({ zh: "返回 AI 工具", en: "Back to AI Tools" })}
-          </Link>
-          <span className="text-border-strong">/</span>
-          <span>{l(category.label)}</span>
-          {tool.platform && (
-            <>
-              <span className="text-border-strong">/</span>
-              <span>{tool.platform}</span>
-            </>
-          )}
-        </div>
 
         <div className="mt-4 flex flex-col gap-3 border-b border-border pb-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex items-start gap-3">

@@ -18,8 +18,8 @@ const brandTools = [
     icon: FileCheck2,
     title: { zh: "AI 审稿", en: "AI Brief Review" },
     description: {
-      zh: "检查达人合作 Brief 的交付要求、品牌表达与风险，获得具体修改建议。",
-      en: "Review creator briefs for deliverables, brand messaging, and risks, with actionable edits.",
+      zh: "上传达人作品，对照品牌要求查看合规、内容质量与传播表现的多维度审核。",
+      en: "Upload creator content and review compliance, content quality, and engagement against brand requirements.",
     },
   },
   {

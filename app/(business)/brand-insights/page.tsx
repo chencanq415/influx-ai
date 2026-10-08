@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { publicAsset } from "@/lib/public-asset";
 import { useUIStore } from "@/lib/store/ui-store";
 import { useLoc } from "@/lib/i18n/use-i18n";
 import { cn } from "@/lib/utils";
@@ -286,7 +287,7 @@ function LegacyCompetitorsPanel() {
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-[10px] border border-border bg-white">
                 {brand.logo ? (
-                  <img src={brand.logo} alt="" className="h-full w-full object-contain p-2" />
+                  <img src={publicAsset(brand.logo)} alt="" className="h-full w-full object-contain p-2" />
                 ) : (
                   <Building2 className="h-4 w-4 text-muted" />
                 )}
@@ -565,7 +566,7 @@ function CompetitorsPanel() {
             <div className="block w-full text-left">
               <div className="relative h-[166px] overflow-hidden bg-page">
                 <img
-                  src={report.cover}
+                  src={publicAsset(report.cover)}
                   alt=""
                   className="h-full w-full object-cover opacity-75 transition-transform duration-500 group-hover:scale-[1.025]"
                 />
@@ -582,7 +583,7 @@ function CompetitorsPanel() {
                     <span className="flex h-8 min-w-8 items-center justify-center overflow-hidden rounded-[8px] border border-white bg-white px-1.5 shadow-sm">
                       {report.logo ? (
                         <img
-                          src={report.logo}
+                          src={publicAsset(report.logo)}
                           alt={`${report.brand} logo`}
                           className="h-5 w-7 object-contain"
                         />
@@ -596,7 +597,7 @@ function CompetitorsPanel() {
                     <span className="flex h-8 min-w-8 items-center justify-center overflow-hidden rounded-[8px] border border-white bg-white px-1.5 shadow-sm">
                       {report.rivalLogo ? (
                         <img
-                          src={report.rivalLogo}
+                          src={publicAsset(report.rivalLogo)}
                           alt={`${report.competitor} logo`}
                           className="h-5 w-7 object-contain"
                         />
@@ -661,7 +662,7 @@ function BrandGrid({ category: _category }: { category: number }) {
           >
             <div className="relative h-[152px] overflow-hidden bg-[#f1f2f4]">
               <img
-                src={brand.cover}
+                src={publicAsset(brand.cover)}
                 alt=""
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
@@ -671,7 +672,7 @@ function BrandGrid({ category: _category }: { category: number }) {
               <span className="absolute -top-6 left-4 flex h-11 w-11 items-center justify-center overflow-hidden rounded-[12px] border-4 border-surface bg-white text-slate shadow-sm">
                 {brand.logo ? (
                   <img
-                    src={brand.logo}
+                    src={publicAsset(brand.logo)}
                     alt={`${brand.name} logo`}
                     className="h-full w-full object-contain p-2"
                   />

@@ -117,6 +117,42 @@ const file = (id: string, zh: string, en: string): ToolField => ({
 
 export const freeTools: FreeTool[] = [
   {
+    slug: "fake-follower-checker",
+    category: "brand",
+    priority: "P0",
+    icon: "audience",
+    title: { zh: "假粉检测", en: "Fake Follower Check" },
+    description: {
+      zh: "评估粉丝真实性与异常互动，辅助品牌筛选达人。",
+      en: "Assess audience authenticity and unusual engagement before a partnership.",
+    },
+    features: [
+      { zh: "粉丝真实性评估", en: "Audience authenticity assessment" },
+      { zh: "异常增长与互动排查", en: "Unusual growth and engagement checks" },
+      { zh: "合作风险参考", en: "Partnership risk guidance" },
+    ],
+    fields: [
+      select("platform", "平台", "Platform", [
+        ["Instagram", "Instagram"],
+        ["TikTok", "TikTok"],
+        ["YouTube", "YouTube"],
+      ]),
+      text(
+        "profile",
+        "达人主页链接",
+        "Creator profile URL",
+        "粘贴达人主页链接",
+        "Paste a creator profile URL",
+      ),
+    ],
+    examples: [
+      {
+        zh: "当前 Demo 尚未接入达人粉丝数据，暂时无法提供真实的假粉比例或风险评分。",
+        en: "This demo is not connected to creator audience data. Authenticity percentages and risk scores are unavailable.",
+      },
+    ],
+  },
+  {
     slug: "instagram-bio-generator",
     category: "creator",
     platform: "Instagram",

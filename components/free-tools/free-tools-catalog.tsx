@@ -1,162 +1,98 @@
 "use client";
 
-import { type ToolCategoryId, type ToolIconId, freeTools, toolCategories } from "@/lib/free-tools";
 import { useLoc } from "@/lib/i18n/use-i18n";
-import { cn } from "@/lib/utils";
 import {
   ArrowRight,
-  AtSign,
   BarChart3,
-  Calculator,
   FileCheck2,
-  FileText,
-  Hash,
   ImagePlay,
-  Lightbulb,
   Mail,
-  MessageSquareText,
-  Search,
-  Sparkles,
-  Target,
-  TrendingUp,
-  UserRound,
-  UsersRound,
+  ShieldCheck,
   WalletCards,
-  Youtube,
 } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
 
-const icons: Record<ToolIconId, React.ElementType> = {
-  profile: UserRound,
-  caption: MessageSquareText,
-  hashtag: Hash,
-  calculator: Calculator,
-  money: WalletCards,
-  youtube: Youtube,
-  script: FileText,
-  video: ImagePlay,
-  copy: AtSign,
-  review: FileCheck2,
-  ideas: Lightbulb,
-  hook: TrendingUp,
-  mail: Mail,
-  audience: UsersRound,
-  strategy: Target,
-  roi: BarChart3,
-  rights: FileCheck2,
-};
+const brandTools = [
+  {
+    slug: "ai-brief-reviewer",
+    icon: FileCheck2,
+    title: { zh: "AI 审稿", en: "AI Brief Review" },
+    description: {
+      zh: "检查达人合作 Brief 的交付要求、品牌表达与风险，获得具体修改建议。",
+      en: "Review creator briefs for deliverables, brand messaging, and risks, with actionable edits.",
+    },
+  },
+  {
+    slug: "fake-follower-checker",
+    icon: ShieldCheck,
+    title: { zh: "假粉检测", en: "Fake Follower Check" },
+    description: {
+      zh: "评估达人粉丝真实性与异常互动，帮助品牌筛选更可靠的合作对象。",
+      en: "Assess audience authenticity and unusual engagement to shortlist reliable creator partners.",
+    },
+  },
+  {
+    slug: "instagram-money-calculator",
+    icon: WalletCards,
+    title: { zh: "达人报价估算", en: "Creator Rate Estimator" },
+    description: {
+      zh: "结合粉丝规模与互动率估算合作报价区间，为预算分配和议价提供参考。",
+      en: "Estimate creator rates from audience size and engagement to support budgeting and negotiation.",
+    },
+  },
+  {
+    slug: "product-image-to-video",
+    icon: ImagePlay,
+    title: { zh: "商品转视频", en: "Product to Video" },
+    description: {
+      zh: "上传商品图片，准备适合社媒投放的短视频素材与展示方向。",
+      en: "Prepare short-form social video concepts using your product images.",
+    },
+  },
+  {
+    slug: "influencer-outreach-email-generator",
+    icon: Mail,
+    title: { zh: "合作邀约邮件", en: "Creator Outreach Email" },
+    description: {
+      zh: "根据品牌、合作目标和达人信息，起草清晰、有针对性的合作邀约。",
+      en: "Draft a focused partnership invitation using your brand, goals, and creator details.",
+    },
+  },
+  {
+    slug: "campaign-roi-calculator",
+    icon: BarChart3,
+    title: { zh: "营销 ROI 计算", en: "Campaign ROI Calculator" },
+    description: {
+      zh: "输入投入、收入与互动数据，计算 ROI、CPM 和 CPE，复盘营销效果。",
+      en: "Calculate ROI, CPM, and CPE from campaign spend, revenue, and engagement.",
+    },
+  },
+];
 
 export function FreeToolsCatalog() {
   const l = useLoc();
-  const [category, setCategory] = useState<ToolCategoryId>("creator");
-  const [query, setQuery] = useState("");
-  const current = toolCategories.find((item) => item.id === category) ?? toolCategories[0];
-  const tools = useMemo(
-    () =>
-      freeTools.filter(
-        (tool) =>
-          tool.category === category &&
-          `${tool.title.zh} ${tool.title.en} ${tool.description.zh} ${tool.description.en}`
-            .toLowerCase()
-            .includes(query.toLowerCase().trim()),
-      ),
-    [category, query],
-  );
-
   return (
-    <section>
-      <div className="flex flex-col gap-4 border-b border-border pb-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <div
-            className="flex flex-wrap gap-1.5"
-            role="tablist"
-            aria-label={l({ zh: "工具分类", en: "Tool categories" })}
-          >
-            {toolCategories.map((item) => {
-              const active = category === item.id;
-              const count = freeTools.filter((tool) => tool.category === item.id).length;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setCategory(item.id)}
-                  className={cn(
-                    "inline-flex h-10 items-center gap-2 rounded-[10px] px-3.5 text-[12px] font-medium transition-colors",
-                    active ? "bg-navy text-white" : "bg-page text-slate hover:text-ink",
-                  )}
-                >
-                  <span>{l(item.label)}</span>
-                  <span
-                    className={cn(
-                      "rounded-full px-1.5 py-0.5 text-[9px]",
-                      active ? "bg-white/15 text-white" : "bg-white text-muted",
-                    )}
-                  >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          <p className="mt-2 text-[11px] text-muted">{l(current.description)}</p>
-        </div>
-        <label className="relative block w-full lg:w-[280px]">
-          <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted" />
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={l({ zh: "搜索工具…", en: "Search tools…" })}
-            className="h-10 w-full rounded-[10px] border border-border bg-white pl-9 pr-3 text-[11px] text-ink outline-none placeholder:text-muted focus:border-ring"
-          />
-        </label>
-      </div>
-
-      <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {tools.map((tool) => {
-          const Icon = icons[tool.icon] ?? Sparkles;
+    <section aria-label={l({ zh: "品牌营销工具", en: "Brand marketing tools" })}>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {brandTools.map((tool) => {
+          const Icon = tool.icon;
           return (
             <Link
               key={tool.slug}
               href={`/creative/tools/${tool.slug}`}
-              className="group flex min-h-[190px] flex-col rounded-[14px] border border-border bg-white p-5 transition-colors hover:border-border-strong hover:bg-[#FCFCFD]"
+              className="group flex min-h-[190px] flex-col rounded-[14px] border border-border bg-white p-5 transition-colors hover:border-border-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <div className="flex items-start justify-between gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-page text-slate transition-colors group-hover:text-brand">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <div className="flex items-center gap-1.5">
-                  {tool.platform && (
-                    <span className="rounded-full bg-page px-2 py-1 text-[8.5px] font-medium text-slate">
-                      {tool.platform}
-                    </span>
-                  )}
-                  <span className="rounded-full bg-soft-pink px-2 py-1 text-[8.5px] font-medium text-brand">
-                    {tool.priority}
-                  </span>
-                </div>
-              </div>
-              <h2 className="mt-4 text-[14px] font-semibold tracking-[-0.01em] text-ink">
-                {l(tool.title)}
-              </h2>
-              <p className="mt-2 line-clamp-2 text-[10.5px] leading-5 text-slate">
-                {l(tool.description)}
-              </p>
-              <span className="mt-auto flex items-center gap-1 pt-4 text-[10.5px] font-medium text-slate group-hover:text-ink">
+              <Icon aria-hidden="true" className="h-6 w-6 text-slate" />
+              <h2 className="mt-5 text-[15px] font-medium text-slate">{l(tool.title)}</h2>
+              <p className="mt-2 text-[11.5px] leading-5 text-muted">{l(tool.description)}</p>
+              <span className="mt-auto flex items-center gap-1.5 pt-5 text-[11px] font-medium text-slate group-hover:text-ink">
                 {l({ zh: "打开工具", en: "Open tool" })}
-                <ArrowRight className="h-3.5 w-3.5" />
+                <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
               </span>
             </Link>
           );
         })}
       </div>
-      {tools.length === 0 && (
-        <div className="py-20 text-center text-[11px] text-muted">
-          {l({ zh: "没有匹配的工具", en: "No matching tools" })}
-        </div>
-      )}
     </section>
   );
 }

@@ -56,7 +56,6 @@ function BrandReportTopbarControls() {
   const tabs = [
     { id: "overview", label: { zh: "总览", en: "Overview" } },
     { id: "marketing", label: { zh: "营销策略", en: "Marketing" } },
-    { id: "signals", label: { zh: "市场动态", en: "Market signals" } },
     { id: "assets", label: { zh: "营销资产", en: "Marketing assets" } },
   ] as const;
   return <div className="flex h-16 min-w-0 items-center gap-3"><Link href="/brand-insights" aria-label={l({ zh: "返回品牌洞察", en: "Back to Brand insights" })} className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-slate transition-colors hover:bg-[#F7F7F8] hover:text-ink"><ChevronLeft className="h-3.5 w-3.5" /></Link><span className="h-4 w-px shrink-0 bg-border" /><TopbarTabs tabs={tabs.map(({ id, label }) => ({ id, label: l(label) }))} activeId={active} onSelect={(id) => setBrandReportTab(id as typeof active)} ariaLabel={l({ zh: "品牌洞察详情导航", en: "Brand insights detail navigation" })} /></div>;

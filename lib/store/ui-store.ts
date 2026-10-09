@@ -5,7 +5,7 @@ import { create } from "zustand";
 
 export type CreatorSearchTab = "ai" | "cover" | "skill" | "chrome";
 export type TrendBoard = "topic" | "product" | "content";
-export type BrandReportTab = "overview" | "marketing" | "signals" | "assets";
+export type BrandReportTab = "overview" | "marketing" | "assets";
 export type DiscoverSections = {
   creators: "ai-search" | "cover-search" | "discovery" | "outreach" | "private";
   brandRadar: "explore" | "competitors";

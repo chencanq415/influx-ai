@@ -1,3 +1,5 @@
+import { createDemoReport } from "./mock-report-data";
+
 export type Platform = "Instagram" | "TikTok" | "YouTube";
 export type InsightContent = {
   id: string;
@@ -23,6 +25,7 @@ export type AssociatedCreator = {
   category: string | null;
   region: string | null;
   profileUrl: string;
+  firstObservedAt?: string;
 };
 export type ReportData = {
   status: "loading" | "success" | "empty" | "partial" | "error" | "unsupported";
@@ -31,6 +34,7 @@ export type ReportData = {
   // Null means data coverage has not been established, rather than zero observations.
   availablePlatforms: Platform[] | null;
   updatedAt: string | null;
+  source: "demo" | "verified" | null;
 };
 
 export const platforms: Platform[] = ["Instagram", "TikTok", "YouTube"];
@@ -40,12 +44,12 @@ export const unavailableReport: ReportData = {
   creators: [],
   availablePlatforms: null,
   updatedAt: null,
+  source: null,
 };
 
-export async function loadReportData(_brandId: string): Promise<ReportData> {
-  // No verified brand-social dataset or service exists in this application yet.
-  // Do not substitute the unrelated mock creator roster for brand associations.
-  return unavailableReport;
+export async function loadReportData(brandId: string): Promise<ReportData> {
+  // Explicit demo fixtures, not a claim of live brand-social coverage.
+  return createDemoReport(brandId);
 }
 
 export function engagement(content: InsightContent): number | null {

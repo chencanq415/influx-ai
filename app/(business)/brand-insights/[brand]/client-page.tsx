@@ -248,15 +248,20 @@ export default function BrandReportPage() {
           <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <p>
             {l(
-              data.status === "unsupported"
+              data.source === "demo"
                 ? {
-                    zh: "尚无已验证的品牌社媒数据。指标、分布与摘要将在数据接入后展示；「—」代表未知，并非零。",
-                    en: "Verified brand social data is unavailable. Metrics, distributions, and summaries await data coverage; — means unknown, not zero.",
+                    zh: "Demo 示例 · 数据、创作者及内容均为模拟，配图为示意素材，不代表真实品牌表现或合作。筛选与图表基于同一套示例数据。",
+                    en: "Demo · Simulated metrics, creators and content with illustrative artwork, not actual brand performance or partnerships. All filters and charts share this sample dataset.",
                   }
-                : {
-                    zh: "统计基于可用的品牌相关内容；品牌提及不代表付费合作，缺失字段不计入指标。",
-                    en: "Metrics use available brand-associated content. Mentions do not imply paid partnerships; missing fields are excluded.",
-                  },
+                : data.status === "unsupported"
+                  ? {
+                      zh: "尚无已验证的品牌社媒数据。指标、分布与摘要将在数据接入后展示；「—」代表未知，并非零。",
+                      en: "Verified brand social data is unavailable. Metrics, distributions, and summaries await data coverage; — means unknown, not zero.",
+                    }
+                  : {
+                      zh: "统计基于可用的品牌相关内容；品牌提及不代表付费合作，缺失字段不计入指标。",
+                      en: "Metrics use available brand-associated content. Mentions do not imply paid partnerships; missing fields are excluded.",
+                    },
             )}
             {data.availablePlatforms && ` · ${data.availablePlatforms.join(" / ")}`}
           </p>
@@ -301,7 +306,7 @@ export default function BrandReportPage() {
                     <Bars rows={distribution(contents.map((c) => c.platform))} />
                   </Panel>
                 </div>
-                <Summary contents={contents} creators={creators} />
+                <Summary contents={contents} creators={creators} demo={data.source === "demo"} />
               </>
             )}
             {tab === "marketing" && (
@@ -417,8 +422,21 @@ export default function BrandReportPage() {
                       { zh: "新增品牌相关内容", en: "New contents" },
                       known ? contents.length : null,
                     ],
-                    [{ zh: "首次观察到的创作者", en: "Newly observed creators" }, null],
-                    [{ zh: "热门内容", en: "Trending contents" }, null],
+                    [
+                      { zh: "首次观察到的创作者", en: "Newly observed creators" },
+                      known
+                        ? creators.filter(
+                            (c) =>
+                              c.firstObservedAt &&
+                              c.firstObservedAt >= start &&
+                              c.firstObservedAt <= end,
+                          ).length
+                        : null,
+                    ],
+                    [
+                      { zh: "高互动内容（≥10K）", en: "High engagement contents (≥10K)" },
+                      known ? contents.filter((c) => (engagement(c) ?? 0) >= 10000).length : null,
+                    ],
                   ]}
                 />
                 <Panel title={{ zh: "近期营销动态", en: "Recent activity timeline" }}>
@@ -435,7 +453,11 @@ export default function BrandReportPage() {
                             </span>
                             <p className="mt-1 text-[13px] text-slate">{c.title}</p>
                             <SafeLink href={c.url}>
-                              {l({ zh: "查看来源内容", en: "View source content" })}
+                              {l(
+                                data.source === "demo"
+                                  ? { zh: "Demo 示例内容", en: "Demo sample content" }
+                                  : { zh: "查看来源内容", en: "View source content" },
+                              )}
                             </SafeLink>
                           </li>
                         ))}
@@ -686,7 +708,8 @@ function Trend({
 function Summary({
   contents,
   creators,
-}: { contents: InsightContent[]; creators: AssociatedCreator[] }) {
+  demo,
+}: { contents: InsightContent[]; creators: AssociatedCreator[]; demo: boolean }) {
   const l = useLoc();
   const findings = [
     { label: { zh: "平台", en: "Platform" }, rows: distribution(contents.map((c) => c.platform)) },
@@ -702,10 +725,15 @@ function Summary({
         <Sparkles className="h-4 w-4 shrink-0 text-brand" />
         {l(
           contents.length
-            ? {
-                zh: "以下特征直接归纳自当前筛选范围内的已验证数据。",
-                en: "The following characteristics summarize verified data in the current scope.",
-              }
+            ? demo
+              ? {
+                  zh: "以下特征根据当前筛选范围内的 Demo 示例统计归纳，仅用于体验报告。",
+                  en: "These characteristics summarize the filtered demo fixtures for preview purposes only.",
+                }
+              : {
+                  zh: "以下特征直接归纳自当前筛选范围内的已验证数据。",
+                  en: "The following characteristics summarize verified data in the current scope.",
+                }
             : {
                 zh: "有足够的来源数据后，将展示平台、创作者与内容特征摘要。",
                 en: "Platform, creator, and content characteristics will appear when source data is available.",
